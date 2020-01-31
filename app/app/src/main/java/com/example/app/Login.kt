@@ -4,28 +4,28 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_register.*
+import kotlinx.android.synthetic.main.activity_login.*
 import java.util.concurrent.Executors
 
 
-class Register : AppCompatActivity() {
+class Login : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_register)
+        setContentView(R.layout.activity_login)
 
         val submitBtn = findViewById<Button>(R.id.submitBtn)
 
-        submitBtn.setOnClickListener{
+        submitBtn.setOnClickListener {
             val username = usernameTxt.text.toString()
             val password = passwordTxt.text.toString()
 
-            Executors.newSingleThreadExecutor().execute{
+            Executors.newSingleThreadExecutor().execute {
                 val api = API()
-                val status = api.register(username, password)
+                val status = api.login(username, password)
 
-                if (status){
-                    val intent = Intent(this@Register, Login::class.java)
+                if (status) {
+                    val intent = Intent(this@Login, Home::class.java)
                     startActivity(intent)
                 } else {
                     runOnUiThread {
