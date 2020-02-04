@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Login">
+
     <TextView
         android:id="@+id/register_title"
         android:layout_width="88dp"
@@ -72,5 +73,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/usernameTxt" />
+
+    <Button
+        android:id="@+id/registerRedirectBtn"
+        android:layout_width="131dp"
+        android:layout_height="29dp"
+        android:layout_marginTop="16dp"
+        android:text="New ? Register"
+        android:textSize="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passwordTxt" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

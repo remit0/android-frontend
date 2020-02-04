@@ -21,7 +21,7 @@ class Login : AppCompatActivity() {
             val password = passwordTxt.text.toString()
 
             Executors.newSingleThreadExecutor().execute {
-                val api = API()
+                val api = API(this)
                 val status = api.login(username, password)
 
                 if (status) {
@@ -35,5 +35,11 @@ class Login : AppCompatActivity() {
                 }
             }
         }
+
+        registerRedirectBtn.setOnClickListener {
+            val intent = Intent(this@Login, Register::class.java)
+            startActivity(intent)
+        }
+
     }
 }

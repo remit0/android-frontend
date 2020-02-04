@@ -21,12 +21,24 @@ class Register : AppCompatActivity() {
             val password = passwordTxt.text.toString()
 
             Executors.newSingleThreadExecutor().execute{
-                val api = API()
-                val status = api.register(username, password)
+                val api = API(this)
+                var status = api.register(username, password)
 
                 if (status){
-                    val intent = Intent(this@Register, Login::class.java)
-                    startActivity(intent)
+
+                    status = api.login(username, password)
+
+                    if (status) {
+                        val intent = Intent(this@Register, Home::class.java)
+                        startActivity(intent)
+
+                    } else {
+                        runOnUiThread {
+                            usernameTxt.text.clear()
+                            passwordTxt.text.clear()
+                        }
+                    }
+
                 } else {
                     runOnUiThread {
                         usernameTxt.text.clear()
