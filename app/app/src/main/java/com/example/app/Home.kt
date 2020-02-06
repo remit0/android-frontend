@@ -1,6 +1,7 @@
 package com.example.app
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -36,7 +37,7 @@ class RatingAdapter(private val context: Context,
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val rowView = inflater.inflate(R.layout.rating_list_row, parent, false)
         val item = getItem(position) as Rating
-        rowView.text1RatingRow.text = item.rating.toString()
+        rowView.text1RatingRow.text = "test"
         return rowView
     }
 }
@@ -50,16 +51,14 @@ class Home : AppCompatActivity() {
 
         val addRatingBtn = findViewById<Button>(R.id.addRatingBtn)
         addRatingBtn.setOnClickListener {
-            Executors.newSingleThreadExecutor().execute {
-                val api = API(this)
-                val new_rating = Rating(product=2, rating=2, user=null, date=null)
-                api.addRating(new_rating)
-            }
+            val intent = Intent(this@Home, AddProductRating::class.java)
+            startActivity(intent)
         }
 
         Executors.newSingleThreadExecutor().execute {
             val api = API(this)
             val ratings = api.getRatings()!!
+            println(ratings[0])
             val listView = findViewById<ListView>(R.id.ratingListView)
             val adapter = RatingAdapter(this, ratings)
             runOnUiThread{ listView.adapter = adapter }

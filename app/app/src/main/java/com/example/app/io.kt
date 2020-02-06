@@ -8,29 +8,24 @@ import org.json.JSONObject
 import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.io.IOException
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
 
 const val BASE_URL = "http://10.0.2.2:8000/"
 
 
-data class Rating(
-    val user: Int?,
-    val product: Int?,
-    val rating: Int?,
-    val date: String?
-    )
-{
-    fun serialize(): Map<String, String>{
-        val params = mutableMapOf<String, String>()
-        this.user?.let{ params.put("user", user.toString())}
-        this.product?.let{ params.put("product", product.toString())}
-        this.rating?.let{ params.put("rating", rating.toString())}
-        this.date?.let{ params.put("user", date)}
-        return params.toMap()
+data class Product(val name: String, val year: String?, val store: String?, val type: String?)
+
+data class Rating(val product: Product, val rating: String, val date: String?)
+    {
+        fun serialize(): Map<String, String>{
+            val params = mutableMapOf<String, String>()
+            params["name"] = product.name
+            params["rating"] = rating
+            product.year?.let{ params.put("year", product.year)}
+            product.store?.let{ params.put("store", product.store)}
+            return params.toMap()
+        }
     }
-}
 
 
 class API (context: Context) {
@@ -126,8 +121,6 @@ class API (context: Context) {
         val response = this.request(endpoint = "rating/", method="GET") ?: return null
         return if (response.isSuccessful) {
             var bodyStr = response.body()!!.string()
-            bodyStr = bodyStr.substring(2, bodyStr.length - 2)
-            bodyStr = bodyStr.replace("\\", "")
             val gson = Gson()
             val type = object : TypeToken<Array<Rating>>() {}.type
             return gson.fromJson(bodyStr, type)
@@ -138,15 +131,13 @@ class API (context: Context) {
     }
 
     fun addRating(rating: Rating): Boolean {
+        println("Hello")
         val params = rating.serialize()
+        println(params)
         val response = this.request(
             endpoint = "rating/", method="POST", formParams = params
         ) ?: return false
         return true
-    }
-
-    fun getProducts() {
-        // TODO
     }
 }
 
