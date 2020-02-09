@@ -6,13 +6,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import android.widget.BaseAdapter
 import android.widget.Button
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.rating_list_row.view.*
+import java.time.format.DateTimeFormatter
 import java.util.concurrent.Executors
 
 
@@ -36,8 +35,12 @@ class RatingAdapter(private val context: Context,
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val rowView = inflater.inflate(R.layout.rating_list_row, parent, false)
-        val item = getItem(position) as Rating
-        rowView.text1RatingRow.text = "test"
+        val rating = getItem(position) as Rating
+        rowView.nameFieldTxt.text = rating.product.name
+        rowView.yearFieldTxt.text = rating.product.year ?: "-"
+        rowView.storeFieldTxt.text = rating.product.store ?: "-"
+        rowView.gradeFieldTxt.text = rating.rating
+        rowView.dateFieldTxt.text = rating.date?.substring(0, 10)
         return rowView
     }
 }
@@ -57,8 +60,7 @@ class Home : AppCompatActivity() {
 
         Executors.newSingleThreadExecutor().execute {
             val api = API(this)
-            val ratings = api.getRatings()!!
-            println(ratings[0])
+            val ratings = api.getRatings()!!.reversedArray()
             val listView = findViewById<ListView>(R.id.ratingListView)
             val adapter = RatingAdapter(this, ratings)
             runOnUiThread{ listView.adapter = adapter }
