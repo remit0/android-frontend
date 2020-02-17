@@ -8,21 +8,45 @@ import org.json.JSONObject
 import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.io.IOException
+import java.io.Serializable
 
 
+// const val BASE_URL = "http://35.180.115.236/"
 const val BASE_URL = "http://10.0.2.2:8000/"
 
 
-data class Product(val name: String, val year: String?, val store: String?, val type: String?)
+data class Product(
+    // required
+    val name: String,
+    // optional
+    val year: String? = null,
+    val store: String? = null,
+    val type: String? = null,
+    val vol:String? = null
+) : Serializable
 
-data class Rating(val product: Product, val rating: String, val date: String?)
+data class Rating(
+    // required
+    val product: Product,
+    val value: String,
+    // optional
+    val comment: String? = null,
+    // auto filled
+    val date: String? = null,
+    val id: String? = null
+) : Serializable
     {
         fun serialize(): Map<String, String>{
             val params = mutableMapOf<String, String>()
+            // required
             params["name"] = product.name
-            params["rating"] = rating
+            params["value"] = value
+            // optional
+            comment?.let{ params.put("comment", comment)}
             product.year?.let{ params.put("year", product.year)}
             product.store?.let{ params.put("store", product.store)}
+            product.type?.let{ params.put("type", product.type)}
+            product.vol?.let{ params.put("vol", product.vol)}
             return params.toMap()
         }
     }
@@ -69,8 +93,8 @@ class API (context: Context) {
         when (method) {
             "GET" -> { requestBuilder.get() }
             "POST" -> { requestBuilder.post(this.createForm(formParams!!)) }
-            // TODO "PUT", "DELETE"
-            else -> throw NotImplementedError("Available methods : ['GET', 'POST']")
+            "DELETE" -> { requestBuilder.delete(this.createForm(formParams!!)) }
+            else -> throw NotImplementedError("Available methods : ['GET', 'POST', 'DELETE']")
         }
         this.addHeaders(requestBuilder, headerParams)
         return requestBuilder.build()
@@ -117,28 +141,33 @@ class API (context: Context) {
         }
     }
 
-    fun getRatings(): Array<Rating>? {
+    fun getRatings(): ArrayList<Rating>? {
         val response = this.request(endpoint = "rating/", method="GET") ?: return null
         return if (response.isSuccessful) {
             var bodyStr = response.body()!!.string()
             val gson = Gson()
-            val type = object : TypeToken<Array<Rating>>() {}.type
+            val type = object : TypeToken<ArrayList<Rating>>() {}.type
             return gson.fromJson(bodyStr, type)
         } else {
-            println(response.body()?.string())
             null
         }
     }
 
     fun addRating(rating: Rating): Boolean {
-        println("Hello")
         val params = rating.serialize()
-        println(params)
         val response = this.request(
             endpoint = "rating/", method="POST", formParams = params
         ) ?: return false
         return true
     }
+
+    fun deleteRating(id: String): Boolean {
+        val response = this.request(
+            endpoint = "rating/", method="DELETE", formParams = mapOf("id" to id)
+        ) ?: return false
+        return true
+    }
+
 }
 
 
@@ -162,7 +191,6 @@ class TokenHandler (context: Context) {
                 token += Character.toString(c.toChar())
             }
             stream.close()
-            println(token)
             return token
         } catch(e: Exception){
             return null

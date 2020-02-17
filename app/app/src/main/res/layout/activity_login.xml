@@ -8,11 +8,12 @@
 
     <TextView
         android:id="@+id/register_title"
-        android:layout_width="88dp"
+        android:layout_width="wrap_content"
         android:layout_height="35dp"
         android:layout_marginTop="40dp"
         android:gravity="center"
-        android:text="Login"
+        android:text="Connexion"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,7 +28,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="50dp"
-        android:text="Submit"
+        android:text="Se connecter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -59,7 +60,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:text="Username"
+        android:text="Pseudo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/register_title" />
@@ -69,17 +70,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="Password"
+        android:text="Mot de Passe"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/usernameTxt" />
 
     <Button
         android:id="@+id/registerRedirectBtn"
-        android:layout_width="131dp"
+        android:layout_width="wrap_content"
         android:layout_height="29dp"
-        android:layout_marginTop="16dp"
-        android:text="New ? Register"
+        android:layout_marginTop="20dp"
+        android:text="S'inscrire"
         android:textSize="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"

@@ -7,83 +7,75 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="0dp"
-        android:layout_height="94dp"
+        android:layout_width="50dp"
+        android:layout_height="90dp"
         android:layout_weight="1"
         app:srcCompat="@mipmap/ic_launcher_round" />
 
     <LinearLayout
         android:layout_width="15dp"
-        android:layout_height="wrap_content"
+        android:layout_height="90dp"
         android:layout_weight="1"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/nameField"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
             android:text="Name" />
 
         <TextView
-            android:id="@+id/yearField"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:text="Year" />
-
-        <TextView
-            android:id="@+id/storeField"
-            android:layout_width="101dp"
-            android:layout_height="wrap_content"
-            android:text="Store" />
-
-        <TextView
             android:id="@+id/gradeField"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
             android:text="Grade" />
 
         <TextView
             android:id="@+id/dateField"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
             android:text="Date" />
 
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="20dp"
-        android:layout_height="wrap_content"
+        android:layout_width="11dp"
+        android:layout_height="90dp"
         android:layout_weight="1"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/nameFieldTxt"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="TextView" />
-
-        <TextView
-            android:id="@+id/yearFieldTxt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="TextView" />
-
-        <TextView
-            android:id="@+id/storeFieldTxt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:text="TextView" />
 
         <TextView
             android:id="@+id/gradeFieldTxt"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:text="TextView" />
 
         <TextView
             android:id="@+id/dateFieldTxt"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:text="TextView" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="7dp"
+        android:layout_height="90dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/deleteRatingBtn"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#00DACACA"
+            android:text="Supprimer"
+            android:textColor="#EB0F0F"
+            android:textSize="12sp" />
     </LinearLayout>
 </LinearLayout>
