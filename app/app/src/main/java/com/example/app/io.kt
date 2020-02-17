@@ -11,8 +11,8 @@ import java.io.IOException
 import java.io.Serializable
 
 
-// const val BASE_URL = "http://35.180.115.236/"
-const val BASE_URL = "http://10.0.2.2:8000/"
+const val BASE_URL = "http://35.180.115.236/"
+// const val BASE_URL = "http://10.0.2.2:8000/"
 
 
 data class Product(
@@ -42,11 +42,11 @@ data class Rating(
             params["name"] = product.name
             params["value"] = value
             // optional
-            comment?.let{ params.put("comment", comment)}
-            product.year?.let{ params.put("year", product.year)}
-            product.store?.let{ params.put("store", product.store)}
-            product.type?.let{ params.put("type", product.type)}
-            product.vol?.let{ params.put("vol", product.vol)}
+            comment?.let{ if (comment != "") params.put("comment", comment)}
+            product.year?.let{ if (product.year != "-") params.put("year", product.year)}
+            product.store?.let{ if (product.store != "-") params.put("store", product.store)}
+            product.type?.let{ if (product.type != "-") params.put("type", product.type)}
+            product.vol?.let{ if (product.vol != "-") params.put("vol", product.vol) }
             return params.toMap()
         }
     }

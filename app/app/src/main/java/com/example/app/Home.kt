@@ -85,7 +85,8 @@ class Home : AppCompatActivity() {
         Executors.newSingleThreadExecutor().execute {
             val api = API(this)
             val ratings = api.getRatings()!!
-            val adapter = RatingAdapter(this, ratings)
+            val ratingsSorted = ratings.sortedByDescending { it.date }.toMutableList()
+            val adapter = RatingAdapter(this, ratingsSorted)
             runOnUiThread { ratingListView.adapter  = adapter }
         }
 
