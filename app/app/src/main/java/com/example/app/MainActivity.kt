@@ -12,7 +12,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val token = TokenHandler(this).read()
         val intent = if (token == null) Intent(this@MainActivity, Login::class.java)
-            else Intent(this@MainActivity, Home::class.java)
+            else Intent(this@MainActivity, ListRating::class.java)
         startActivity(intent)
     }
 }

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProductDetail">
+    tools:context=".EditRating">
 
     <RatingBar
         android:id="@+id/ratingBar"
@@ -15,17 +15,6 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nameTxt" />
-
-    <TextView
-        android:id="@+id/nameTxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="TextView"
-        android:textSize="30sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/static1"
@@ -75,59 +64,12 @@
         android:id="@+id/static5"
         android:layout_width="100dp"
         android:layout_height="40dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginLeft="48dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginLeft="50dp"
         android:layout_marginTop="20dp"
         android:text="Commentaires"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/static6" />
-
-    <TextView
-        android:id="@+id/commentTxt"
-        android:layout_width="200dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
-        android:shadowColor="#0030D9F0"
-        android:text="..."
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/static5"
-        app:layout_constraintTop_toBottomOf="@+id/volTxt" />
-
-    <TextView
-        android:id="@+id/storeTxt"
-        android:layout_width="200dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="30dp"
-        android:text="TextView"
-        app:layout_constraintStart_toEndOf="@+id/static1"
-        app:layout_constraintTop_toBottomOf="@+id/ratingBar" />
-
-    <TextView
-        android:id="@+id/yearTxt"
-        android:layout_width="200dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="20dp"
-        android:text="TextView"
-        app:layout_constraintStart_toEndOf="@+id/static2"
-        app:layout_constraintTop_toBottomOf="@+id/storeTxt" />
-
-    <TextView
-        android:id="@+id/typeTxt"
-        android:layout_width="200dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="20dp"
-        android:text="TextView"
-        app:layout_constraintStart_toEndOf="@+id/static3"
-        app:layout_constraintTop_toBottomOf="@+id/yearTxt" />
 
     <TextView
         android:id="@+id/dateTxt"
@@ -138,7 +80,7 @@
         android:layout_marginTop="20dp"
         android:text="TextView"
         app:layout_constraintStart_toEndOf="@+id/static4"
-        app:layout_constraintTop_toBottomOf="@+id/typeTxt" />
+        app:layout_constraintTop_toBottomOf="@+id/spinnerType" />
 
     <TextView
         android:id="@+id/static6"
@@ -151,14 +93,81 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/static4" />
 
-    <TextView
-        android:id="@+id/volTxt"
+    <Button
+        android:id="@+id/editBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:text="Modifier"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/commentTxt"
         android:layout_width="200dp"
         android:layout_height="40dp"
         android:layout_marginStart="30dp"
         android:layout_marginLeft="30dp"
         android:layout_marginTop="20dp"
-        android:text="TextView"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Name"
+        app:layout_constraintStart_toEndOf="@+id/static5"
+        app:layout_constraintTop_toBottomOf="@+id/volBar" />
+
+    <Spinner
+        android:id="@+id/spinnerType"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toEndOf="@+id/static3"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerYear" />
+
+    <Spinner
+        android:id="@+id/spinnerYear"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toEndOf="@+id/static2"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerStore" />
+
+    <Spinner
+        android:id="@+id/spinnerStore"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="30dp"
+        app:layout_constraintStart_toEndOf="@+id/static1"
+        app:layout_constraintTop_toBottomOf="@+id/ratingBar" />
+
+    <EditText
+        android:id="@+id/nameTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <SeekBar
+        android:id="@+id/volBar"
+        style="@style/Widget.AppCompat.SeekBar.Discrete"
+        android:max="50"
+        android:progress="1"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="20dp"
         app:layout_constraintStart_toEndOf="@+id/static6"
         app:layout_constraintTop_toBottomOf="@+id/dateTxt" />
 </androidx.constraintlayout.widget.ConstraintLayout>

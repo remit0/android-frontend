@@ -29,7 +29,7 @@ class Register : AppCompatActivity() {
                     status = api.login(username, password)
 
                     if (status) {
-                        val intent = Intent(this@Register, Home::class.java)
+                        val intent = Intent(this@Register, ListRating::class.java)
                         startActivity(intent)
 
                     } else {

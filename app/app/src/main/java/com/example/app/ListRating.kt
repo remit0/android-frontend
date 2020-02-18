@@ -8,11 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.Button
-import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat.startActivity
-import kotlinx.android.synthetic.main.activity_home.*
-import kotlinx.android.synthetic.main.rating_list_row.view.*
+import kotlinx.android.synthetic.main.activity_list_rating.*
+import kotlinx.android.synthetic.main.list_rating_row.view.*
 import java.util.concurrent.Executors
 
 
@@ -37,7 +35,7 @@ class RatingAdapter(
     }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        val rowView = inflater.inflate(R.layout.rating_list_row, parent, false)
+        val rowView = inflater.inflate(R.layout.list_rating_row, parent, false)
         val rating = getItem(position) as Rating
 
         /* Row View : Show Item */
@@ -57,7 +55,7 @@ class RatingAdapter(
 
         /* Row View : On Click */
         rowView.setOnClickListener {
-            val intent = Intent(this.context, ProductDetail::class.java)
+            val intent = Intent(this.context, DetailRating::class.java)
             intent.putExtra("rating", rating)
             this.context.startActivity(intent)
         }
@@ -67,17 +65,17 @@ class RatingAdapter(
 }
 
 
-class Home : AppCompatActivity() {
+class ListRating : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_home)
+        setContentView(R.layout.activity_list_rating)
 
         /* List View : Add Item */
         val addRatingBtn = findViewById<Button>(R.id.addRatingBtn)
         addRatingBtn.setOnClickListener {
-            val intent = Intent(this@Home, AddProductRating::class.java)
+            val intent = Intent(this@ListRating, AddRating::class.java)
             startActivity(intent)
         }
 

@@ -11,48 +11,50 @@ import java.io.IOException
 import java.io.Serializable
 
 
-const val BASE_URL = "http://35.180.115.236/"
-// const val BASE_URL = "http://10.0.2.2:8000/"
-
+// const val BASE_URL = "http://35.180.115.236/"   // prod
+const val BASE_URL = "http://10.0.2.2:8000/" // local
 
 data class Product(
-    // required
-    val name: String,
-    // optional
-    val year: String? = null,
-    val store: String? = null,
-    val type: String? = null,
-    val vol:String? = null
+    /* required */
+    var name: String,
+    /* optional */
+    var year: String? = null,
+    var store: String? = null,
+    var type: String? = null,
+    var vol:String? = null
 ) : Serializable
 
 data class Rating(
-    // required
-    val product: Product,
-    val value: String,
-    // optional
-    val comment: String? = null,
-    // auto filled
+    /* required */
+    var product: Product,
+    var value: String,
+    /* optional */
+    var comment: String? = null,
+    /* auto filled */
     val date: String? = null,
     val id: String? = null
 ) : Serializable
     {
         fun serialize(): Map<String, String>{
+            /* Serializes a Rating object to a Map in order to send it to the API */
             val params = mutableMapOf<String, String>()
-            // required
-            params["name"] = product.name
-            params["value"] = value
-            // optional
-            comment?.let{ if (comment != "") params.put("comment", comment)}
-            product.year?.let{ if (product.year != "-") params.put("year", product.year)}
-            product.store?.let{ if (product.store != "-") params.put("store", product.store)}
-            product.type?.let{ if (product.type != "-") params.put("type", product.type)}
-            product.vol?.let{ if (product.vol != "-") params.put("vol", product.vol) }
+            /* required */
+            params.put("name", product.name)
+            params.put("value", value)
+            /* optional */
+            comment?.let{ if (comment != "") params.put("comment", comment.toString()) }
+            product.year?.let{ if (product.year != "-") params.put("year", product.year.toString()) }
+            product.store?.let{ if (product.store != "-") params.put("store", product.store.toString()) }
+            product.type?.let{ if (product.type != "-") params.put("type", product.type.toString()) }
+            product.vol?.let{ if (product.vol != "-") params.put("vol", product.vol.toString()) }
             return params.toMap()
         }
     }
 
 
 class API (context: Context) {
+
+    /* Connects and makes requests to the backend */
 
     private val context: Context = context
     private val client: OkHttpClient = OkHttpClient()
@@ -94,7 +96,8 @@ class API (context: Context) {
             "GET" -> { requestBuilder.get() }
             "POST" -> { requestBuilder.post(this.createForm(formParams!!)) }
             "DELETE" -> { requestBuilder.delete(this.createForm(formParams!!)) }
-            else -> throw NotImplementedError("Available methods : ['GET', 'POST', 'DELETE']")
+            "PUT" -> { requestBuilder.put(this.createForm(formParams!!)) }
+            else -> throw NotImplementedError("Available methods : ['GET', 'POST', 'DELETE', 'PUT']")
         }
         this.addHeaders(requestBuilder, headerParams)
         return requestBuilder.build()
@@ -144,7 +147,7 @@ class API (context: Context) {
     fun getRatings(): ArrayList<Rating>? {
         val response = this.request(endpoint = "rating/", method="GET") ?: return null
         return if (response.isSuccessful) {
-            var bodyStr = response.body()!!.string()
+            val bodyStr = response.body()!!.string()
             val gson = Gson()
             val type = object : TypeToken<ArrayList<Rating>>() {}.type
             return gson.fromJson(bodyStr, type)
@@ -168,10 +171,21 @@ class API (context: Context) {
         return true
     }
 
+    fun updateRating(id: String, params: Map<String, String>): Boolean {
+        val formParams = params.toMutableMap()
+        formParams.put("id", id)
+        val response = this.request(
+            endpoint = "rating/", method = "PUT", formParams = formParams
+        ) ?: return false
+        return true
+    }
+
 }
 
 
 class TokenHandler (context: Context) {
+
+    /* Handles tokens read/write on the local file system */
 
     private val context: Context = context
     private val file = "token"

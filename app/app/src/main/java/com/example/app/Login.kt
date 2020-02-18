@@ -25,7 +25,7 @@ class Login : AppCompatActivity() {
                 val status = api.login(username, password)
 
                 if (status) {
-                    val intent = Intent(this@Login, Home::class.java)
+                    val intent = Intent(this@Login, ListRating::class.java)
                     startActivity(intent)
                 } else {
                     runOnUiThread {

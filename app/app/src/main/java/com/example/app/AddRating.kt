@@ -4,25 +4,17 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ArrayAdapter
-import kotlinx.android.synthetic.main.activity_add_product_rating.*
+import kotlinx.android.synthetic.main.activity_add_rating.*
 import java.util.concurrent.Executors
 import kotlin.math.roundToInt
 
-class AddProductRating : AppCompatActivity() {
+class AddRating : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_add_product_rating)
+        setContentView(R.layout.activity_add_rating)
 
         // configure store drop down list
-        val storeChoices = mutableListOf(
-            "-",
-            "Carrefour",
-            "Monoprix",
-            "Franprix",
-            "Leclerc",
-            "Auchan"
-            )
         val adapter = ArrayAdapter<String>(
             this, android.R.layout.simple_spinner_dropdown_item, storeChoices
         )
@@ -30,9 +22,7 @@ class AddProductRating : AppCompatActivity() {
         storeSpinner.setSelection(0)
 
         // configure year drop down list
-        val yearChoicesInt = (1900..2020).toMutableList()
-        val yearChoices = yearChoicesInt.map { it.toString() }.toMutableList()
-        yearChoices.add("-")
+        val yearChoices = getYearChoices()
         val yearAdapter = ArrayAdapter<String>(
             this, android.R.layout.simple_spinner_dropdown_item, yearChoices
         )
@@ -40,14 +30,6 @@ class AddProductRating : AppCompatActivity() {
         yearSpinner.setSelection(yearChoices.size - 1)
 
         // configure type drop down list
-        val typeChoices = mutableListOf(
-            "-",
-            "Vodka",
-            "Tequila",
-            "Rhum",
-            "Vin",
-            "Bière"
-        )
         val typeAdapter = ArrayAdapter<String>(
             this, android.R.layout.simple_spinner_dropdown_item, typeChoices
         )
@@ -70,7 +52,7 @@ class AddProductRating : AppCompatActivity() {
                 val api = API(this)
                 api.addRating(rating)
                 runOnUiThread {
-                    val intent = Intent(this@AddProductRating, Home::class.java)
+                    val intent = Intent(this@AddRating, ListRating::class.java)
                     startActivity(intent)
                 }
             }
