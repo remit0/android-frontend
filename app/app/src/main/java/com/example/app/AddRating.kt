@@ -3,6 +3,7 @@ package com.example.app
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
 import android.widget.ArrayAdapter
 import kotlinx.android.synthetic.main.activity_add_rating.*
 import java.util.concurrent.Executors
@@ -50,7 +51,7 @@ class AddRating : AppCompatActivity() {
 
             Executors.newSingleThreadExecutor().execute{
                 val api = API(this)
-                api.addRating(rating)
+                val response = api.addRating(rating)
                 runOnUiThread {
                     val intent = Intent(this@AddRating, ListRating::class.java)
                     startActivity(intent)

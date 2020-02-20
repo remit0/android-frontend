@@ -2,6 +2,7 @@ package com.example.app
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -43,6 +44,13 @@ class RatingAdapter(
         rowView.gradeFieldTxt.text = rating.value
         rowView.dateFieldTxt.text = rating.date?.substring(0, 10)
 
+        var img: Bitmap? = null
+        Executors.newSingleThreadExecutor().execute {
+            val api = API(rowView.context)
+            img = api.getPicture(rating.product.id!!)
+            img?.let { rowView.imageView.setImageBitmap(img) }
+        }
+
         /* Row View : Delete Item */
         rowView.deleteRatingBtn.setOnClickListener {
             Executors.newSingleThreadExecutor().execute {
@@ -57,6 +65,14 @@ class RatingAdapter(
         rowView.setOnClickListener {
             val intent = Intent(this.context, DetailRating::class.java)
             intent.putExtra("rating", rating)
+            this.context.startActivity(intent)
+        }
+
+        /* Row View Image : On Click */
+        rowView.imageView.setOnClickListener {
+            val intent = Intent(this.context, TakePicture::class.java)
+            println(rating.product.id)
+            intent.putExtra("product_id", rating.product.id)
             this.context.startActivity(intent)
         }
 

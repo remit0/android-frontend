@@ -1,14 +1,13 @@
 package com.example.app
 
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import okhttp3.*
 import org.json.JSONObject
-import java.io.FileInputStream
-import java.io.FileOutputStream
-import java.io.IOException
-import java.io.Serializable
+import java.io.*
 
 
 // const val BASE_URL = "http://35.180.115.236/"   // prod
@@ -21,7 +20,8 @@ data class Product(
     var year: String? = null,
     var store: String? = null,
     var type: String? = null,
-    var vol:String? = null
+    var vol:String? = null,
+    var id: String? = null
 ) : Serializable
 
 data class Rating(
@@ -180,6 +180,37 @@ class API (context: Context) {
         return true
     }
 
+    fun sendPicture(file: File, product_id: String) {
+        val url = BASE_URL + "image/"
+        val requestBuilder = Request.Builder().url(url)
+        this.addHeaders(requestBuilder, null)
+        val body = MultipartBody.Builder()
+            .setType(MultipartBody.FORM)
+            .addFormDataPart(
+                "image", file.name, RequestBody.create(MediaType.parse("image/*"), file)
+            )
+            .addFormDataPart("product", product_id)
+            .build()
+        val request = requestBuilder.post(body).build()
+        try {
+            println(this.client.newCall(request).execute())
+        } catch (e: Exception){ println(e.printStackTrace())}
+    }
+
+    fun getPicture(product_id: String): Bitmap? {
+
+        try {
+            val response = request(
+                endpoint = "image/", method = "GET", urlParams = mapOf("id" to product_id)
+            )
+            val bytes = response!!.body()!!.bytes()
+            val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+            return bitmap
+        } catch (e: Exception){
+            println(e.printStackTrace())
+            return null
+        }
+    }
 }
 
 
